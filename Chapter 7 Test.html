@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7 Science Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f0fdf4; }
+        .correct { border-color: #22c55e !important; background-color: #dcfce7 !important; color: #166534 !important; }
+        .incorrect { border-color: #ef4444 !important; background-color: #fee2e2 !important; color: #991b1b !important; }
+        
+        input[type="text"], select {
+            border: 0px;
+            border-bottom: 2px solid #9ca3af;
+            border-radius: 0px;
+            background-color: transparent;
+            padding: 4px 8px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        input[type="text"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-bottom-color: #0d9488;
+            background-color: #f0fdfa;
+        }
+        textarea {
+            width: 100%;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        /* Foreign Object Input Overrides for SVGs */
+        foreignObject input, foreignObject select {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0 4px;
+            text-align: center;
+            background: white;
+            border: 1px solid #9ca3af;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 text-gray-800">
+
+<div class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden" id="test-container">
+    <div class="bg-teal-600 text-white p-6 md:p-8 flex flex-col md:flex-row justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold">Chapter 7 Test</h1>
+            <p class="text-teal-100 mt-2">Science 6</p>
+        </div>
+        <div class="mt-4 md:mt-0 flex gap-4 items-center">
+            <label class="font-semibold">Name:</label>
+            <input type="text" id="studentName" class="!border-white !text-white !border-b-2 focus:!bg-teal-700 placeholder-teal-200" placeholder="Student Name" style="width: 200px;">
+        </div>
+    </div>
+
+    <div class="p-6 md:p-8 space-y-12">
+
+        <section>
+            <h2 class="text-xl font-bold mb-4 border-b pb-2">A. Label the parts of the atom.</h2>
+            <div class="relative w-full max-w-lg mx-auto overflow-visible" style="height: 350px;">
+                <svg width="100%" height="100%" viewBox="0 0 500 350" preserveAspectRatio="xMidYMid meet">
+                    <!-- Atom Orbits -->
+                    <ellipse cx="250" cy="175" rx="140" ry="50" transform="rotate(30 250 175)" fill="none" stroke="#cbd5e1" stroke-width="3" />
+                    <ellipse cx="250" cy="175" rx="140" ry="50" transform="rotate(-30 250 175)" fill="none" stroke="#cbd5e1" stroke-width="3" />
+                    <ellipse cx="250" cy="175" rx="140" ry="50" transform="rotate(90 250 175)" fill="none" stroke="#cbd5e1" stroke-width="3" />
+                    
+                    <!-- Nucleus Encompassing Circle -->
+                    <circle cx="250" cy="172" r="28" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+                    <!-- Nucleus Particles -->
+                    <circle cx="240" cy="165" r="10" fill="#334155" /> <!-- Neutron -->
+                    
+                    <circle cx="255" cy="160" r="10" fill="#f8fafc" stroke="#334155" stroke-width="2"/> <!-- Proton -->
+                    <text x="255" y="164" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">+</text>
+                    
+                    <circle cx="260" cy="175" r="10" fill="#334155" /> <!-- Neutron -->
+                    
+                    <circle cx="245" cy="185" r="10" fill="#f8fafc" stroke="#334155" stroke-width="2"/> <!-- Proton -->
+                    <text x="245" y="189" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">+</text>
+                    
+                    <circle cx="250" cy="175" r="10" fill="#334155" /> <!-- Neutron -->
+                    
+                    <!-- Electrons -->
+                    <circle cx="160" cy="70" r="8" fill="#94a3b8" />
+                    <circle cx="170" cy="270" r="8" fill="#94a3b8" />
+                    
+                    <!-- Pointers -->
+                    <!-- 1. Electron -->
+                    <path d="M 160 70 C 130 50 100 50 80 50" fill="none" stroke="black" stroke-width="1.5" />
+                    <!-- 2. Proton -->
+                    <path d="M 265 155 C 300 130 350 130 380 130" fill="none" stroke="black" stroke-width="1.5" />
+                    <!-- 3. Neutron -->
+                    <path d="M 270 175 C 310 220 350 230 380 230" fill="none" stroke="black" stroke-width="1.5" />
+                    <!-- 4. Nucleus -->
+                    <path d="M 222 172 C 180 180 150 250 120 250" fill="none" stroke="black" stroke-width="1.5" />
+
+                    <!-- Embedded Inputs -->
+                    <foreignObject x="0" y="35" width="100" height="30">
+                        <div class="flex items-center gap-2"><span class="font-bold">1.</span><input type="text" id="q1"></div>
+                    </foreignObject>
+                    <foreignObject x="390" y="115" width="110" height="30">
+                        <div class="flex items-center gap-2"><span class="font-bold">2.</span><input type="text" id="q2"></div>
+                    </foreignObject>
+                    <foreignObject x="390" y="215" width="110" height="30">
+                        <div class="flex items-center gap-2"><span class="font-bold">3.</span><input type="text" id="q3"></div>
+                    </foreignObject>
+                    <foreignObject x="10" y="235" width="110" height="30">
+                        <div class="flex items-center gap-2"><span class="font-bold">4.</span><input type="text" id="q4"></div>
+                    </foreignObject>
+                </svg>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4 border-b pb-2">B. Write the letter of the correct answer.</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="flex-grow space-y-4">
+                    <div class="flex gap-3"><select id="q5" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span>5. a substance; only one kind of atom</span></div>
+                    <div class="flex gap-3"><select id="q6" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span>6. the smallest piece of an element that can be recognized as that element</span></div>
+                    <div class="flex gap-3"><select id="q7" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span>7. the study of matter—what it is made of, what its usual characteristics are, how it reacts to other matter</span></div>
+                    <div class="flex gap-3"><select id="q8" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span>8. an atom that has gained or lost electrons</span></div>
+                    <div class="flex gap-3"><select id="q9" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span>9. the process in which different types of atoms join and form a new substance</span></div>
+                    <div class="flex gap-3"><select id="q10" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span>10. based on the number of protons in the nucleus</span></div>
+                    <div class="flex gap-3"><select id="q11" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span>11. chemical symbols and numbers abbreviating the name of a compound</span></div>
+                    <div class="flex gap-3"><select id="q12" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span>12. an ionic compound produced from a reaction between an acid and a base</span></div>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-xl border-2 border-gray-300 min-w-[200px] h-fit">
+                    <ul class="space-y-2 font-medium">
+                        <li>A. atom</li>
+                        <li>B. atomic number</li>
+                        <li>C. chemical change</li>
+                        <li>D. chemical formula</li>
+                        <li>E. chemistry</li>
+                        <li>F. element</li>
+                        <li>G. ion</li>
+                        <li>H. salt</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4 border-b pb-2">C. Identify the characteristics as belonging to an acid (A) or a base (B).</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                <div class="flex gap-3"><select id="q13" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option></select><span>13. lemons, vinegar, tomato juice</span></div>
+                <div class="flex gap-3"><select id="q16" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option></select><span>16. can burn; can be corrosive</span></div>
+                <div class="flex gap-3"><select id="q14" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option></select><span>14. slippery to touch</span></div>
+                <div class="flex gap-3"><select id="q17" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option></select><span>17. bitter taste</span></div>
+                <div class="flex gap-3"><select id="q15" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option></select><span>15. sour taste</span></div>
+                <div class="flex gap-3"><select id="q18" class="!w-16"><option value=""></option><option value="A">A</option><option value="B">B</option></select><span>18. baking soda, soap, bleach</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4 border-b pb-2">D. Write the letter of the correct answer.</h2>
+            <div class="space-y-6">
+                <!-- MC 19 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q19" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>19. The sum of the number of protons and neutrons results in an atom's approximate ____________.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. pH scale</span><span>C. atomic number</span><span>B. electrons</span><span>D. atomic mass</span></div>
+                    </div>
+                </div>
+                <!-- MC 20 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q20" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>20. Scientist ____________ developed a simplified model of an atom.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. Niels Bohr</span><span>C. Ernest Rutherford</span><span>B. Dmitri Mendeleev</span><span>D. Robert Boyle</span></div>
+                    </div>
+                </div>
+                <!-- MC 21 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q21" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>21. The scientist ____________ developed the periodic table of the elements.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. Niels Bohr</span><span>C. Ernest Rutherford</span><span>B. Dmitri Mendeleev</span><span>D. Robert Boyle</span></div>
+                    </div>
+                </div>
+                <!-- MC 22 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q22" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>22. When positively and negatively charged ions attract each other they form a(n) ____________.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. indicator</span><span>C. ionic bond</span><span>B. neutron</span><span>D. covalent bond</span></div>
+                    </div>
+                </div>
+                <!-- MC 23 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q23" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>23. In a(n) ____________ atoms share electrons.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. element</span><span>C. ionic bond</span><span>B. salt</span><span>D. covalent bond</span></div>
+                    </div>
+                </div>
+                <!-- MC 24 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q24" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>24. A ____________ reaction occurs when a compound is broken down into simpler compounds.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. synthesis</span><span>C. decomposition</span><span>B. replacement</span><span>D. combustion</span></div>
+                    </div>
+                </div>
+                <!-- MC 25 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q25" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>25. The compound H₂CO₃ has ____________ atom(s) of carbon in it.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. one</span><span>C. zero</span><span>B. two</span><span>D. three</span></div>
+                    </div>
+                </div>
+                <!-- MC 26 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q26" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>26. You can determine the concentration of acids or bases in a solution by using ____________.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. a salt</span><span>C. the periodic table of elements</span><span>B. the pH scale</span><span>D. a particle accelerator</span></div>
+                    </div>
+                </div>
+                <!-- MC 27 -->
+                <div class="flex gap-4 items-start">
+                    <select id="q27" class="!w-16 mt-1"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <div>
+                        <p>27. A substance that changes color when exposed to acid or base solutions is called a(n) ____________.</p>
+                        <div class="grid grid-cols-2 mt-2 gap-2 text-sm"><span>A. salt</span><span>C. molecule</span><span>B. ion</span><span>D. indicator</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4 border-b pb-2">E. Fill in the blanks to label the periodic cell.</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 py-4">
+                
+                <div class="relative w-[300px] h-[250px]">
+                    <svg width="100%" height="100%" viewBox="0 0 300 250">
+                        <!-- Connecting Lines -->
+                        <path d="M 80 40 L 140 45" fill="none" stroke="black" stroke-width="1.5" marker-end="url(#arrowhead)" />
+                        <path d="M 80 90 L 165 85" fill="none" stroke="black" stroke-width="1.5" marker-end="url(#arrowhead)" />
+                        <path d="M 80 140 L 170 140" fill="none" stroke="black" stroke-width="1.5" marker-end="url(#arrowhead)" />
+                        <path d="M 80 190 L 165 195" fill="none" stroke="black" stroke-width="1.5" marker-end="url(#arrowhead)" />
+
+                        <!-- Periodic Cell Box -->
+                        <rect x="130" y="20" width="160" height="200" fill="white" stroke="black" stroke-width="2" />
+                        <!-- Cell Text -->
+                        <text x="145" y="60" font-size="28" font-weight="bold">11</text>
+                        <text x="210" y="90" font-size="20" text-anchor="middle">Sodium</text>
+                        <text x="210" y="160" font-size="64" font-weight="bold" text-anchor="middle">Na</text>
+                        <text x="210" y="200" font-size="18" text-anchor="middle">22.98977</text>
+
+                        <!-- Definitions for arrowheads -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                                <polygon points="0 0, 6 3, 0 6" fill="black" />
+                            </marker>
+                        </defs>
+
+                        <!-- Labels -->
+                        <text x="5" y="45" font-size="16" font-weight="bold">28.</text>
+                        <text x="5" y="95" font-size="16" font-weight="bold">29.</text>
+                        <text x="5" y="145" font-size="16" font-weight="bold">30.</text>
+                        <text x="5" y="195" font-size="16" font-weight="bold">31.</text>
+
+                        <!-- Embedded Dropdowns -->
+                        <foreignObject x="35" y="25" width="40" height="30">
+                            <select id="q28"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                        </foreignObject>
+                        <foreignObject x="35" y="75" width="40" height="30">
+                            <select id="q29"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                        </foreignObject>
+                        <foreignObject x="35" y="125" width="40" height="30">
+                            <select id="q30"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                        </foreignObject>
+                        <foreignObject x="35" y="175" width="40" height="30">
+                            <select id="q31"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                        </foreignObject>
+                    </svg>
+                </div>
+
+                <div class="bg-gray-100 p-6 rounded-xl border-2 border-gray-300">
+                    <ul class="space-y-2 font-medium">
+                        <li>A. atomic mass</li>
+                        <li>B. atomic number</li>
+                        <li>C. chemical symbol</li>
+                        <li>D. element name</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4 border-b pb-2">F. Complete the section. <span class="text-sm font-normal text-teal-700 italic">(These questions will be manually graded by your teacher)</span></h2>
+            <div class="space-y-6">
+                <div>
+                    <p class="font-medium mb-2">32. If the element copper has 29 protons, how many electrons does it have?</p>
+                    <input type="text" id="q32a" class="!w-40 !border-b-2 bg-gray-50" data-numeric="true" placeholder="Answer here"> 
+                    <p class="font-medium mt-4 mb-2">How do you know?</p>
+                    <textarea id="q32b" placeholder="Explain your reasoning..."></textarea>
+                </div>
+                
+                <div>
+                    <p class="font-medium mb-2">33. What are two things you can tell about an element based on its location on the periodic table? (Hint: Use the words periods and groups.)</p>
+                    <textarea id="q33" placeholder="Type your answer here..."></textarea>
+                </div>
+
+                <div>
+                    <p class="font-medium mb-2">34. Explain why all compounds are molecules but not all molecules are compounds.</p>
+                    <textarea id="q34" placeholder="Type your answer here..."></textarea>
+                </div>
+
+                <div>
+                    <p class="font-medium mb-2">35. Your little brother was just stung by a bee. You know that a bee's sting is painful because of the acid that it contains. What is something from your kitchen or bathroom that would help relieve the pain? Why would it work?</p>
+                    <textarea id="q35" placeholder="Type your answer here..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <div class="border-t pt-8 text-center">
+            <button onclick="gradeTest()" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transition transform hover:scale-105">
+                Submit & Email Test
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div id="results-page" class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden mt-8 hidden p-8 text-center">
+    <h2 class="text-3xl font-bold text-teal-600 mb-4">Test Results Submitted</h2>
+    <p id="result-name" class="text-xl mb-2"></p>
+    
+    <div class="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded-lg my-4 text-left shadow-sm">
+        <p class="font-bold">Note:</p>
+        <p>The score below is only for the objective portion of your test (Multiple Choice, Matching, Fill-in-the-blanks). Your teacher will read and grade your long-answer responses separately.</p>
+    </div>
+
+    <div id="result-score" class="text-2xl font-bold p-4 rounded-lg my-6"></div>
+    
+    <div class="text-left mt-6 bg-red-50 p-6 rounded-lg border border-red-100">
+        <h3 class="text-xl font-bold border-b border-red-200 pb-2 mb-4 text-red-800">Incorrect Auto-Graded Questions:</h3>
+        <ul id="incorrect-list" class="list-disc list-inside text-red-600 font-medium space-y-2 mb-4">
+        </ul>
+    </div>
+    
+    <div class="mt-8">
+        <button onclick="downloadResultsImage()" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transition transform hover:scale-105 flex items-center justify-center mx-auto gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Save a Copy
+        </button>
+        <p class="text-sm text-gray-500 mt-3">Clicking this will download an image summary of your answers.</p>
+    </div>
+</div>
+
+<script>
+    // iPad Optimizations: Force numeric keypads only on explicitly numeric text inputs
+    document.addEventListener('DOMContentLoaded', () => {
+        const numericInputs = document.querySelectorAll('input[type="text"][data-numeric="true"]');
+        numericInputs.forEach(input => {
+            input.setAttribute('inputmode', 'decimal');
+        });
+        
+        // Disable autocorrect on short-text inputs to prevent unwanted spelling changes
+        const textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(input => {
+            input.setAttribute('autocorrect', 'off');
+            input.setAttribute('spellcheck', 'false');
+        });
+    });
+
+    // Auto-Graded Answer Key
+    const answers = {
+        q1: ['electron', 'electrons'], 
+        q2: ['proton', 'protons', 'neutron', 'neutrons', 'nucleus'], 
+        q3: ['proton', 'protons', 'neutron', 'neutrons', 'nucleus'], 
+        q4: ['proton', 'protons', 'neutron', 'neutrons', 'nucleus'],
+        q5: ['F'], q6: ['A'], q7: ['E'], q8: ['G'], q9: ['C'], q10: ['B'], q11: ['D'], q12: ['H'],
+        q13: ['A'], q14: ['B'], q15: ['A'], q16: ['A'], q17: ['B'], q18: ['B'],
+        q19: ['D'], q20: ['A'], q21: ['B'], q22: ['C'], q23: ['D'], q24: ['C'], q25: ['A'], q26: ['B'], q27: ['D'],
+        q28: ['B'], q29: ['D'], q30: ['C'], q31: ['A'],
+        q32a: ['29', '29 electrons']
+    };
+
+    const questionLabels = {
+        q1: '1 (Atom: Electron)', q2: '2 (Atom: Proton)', q3: '3 (Atom: Neutron)', q4: '4 (Atom: Nucleus)',
+        q5: '5', q6: '6', q7: '7', q8: '8', q9: '9', q10: '10', q11: '11', q12: '12',
+        q13: '13', q14: '14', q15: '15', q16: '16', q17: '17', q18: '18',
+        q19: '19', q20: '20', q21: '21', q22: '22', q23: '23', q24: '24', q25: '25', q26: '26', q27: '27',
+        q28: '28', q29: '29', q30: '30', q31: '31',
+        q32a: '32 (Number of electrons)'
+    };
+
+    let finalScore = 0;
+    let finalTotal = 0;
+    let finalPercentage = 0;
+    let finalIncorrect = [];
+    let finalName = '';
+    
+    // Store manual answers to print and email
+    let manualAnswers = {};
+
+    function cleanString(str) {
+        return str.toLowerCase().trim();
+    }
+
+    function gradeTest() {
+        finalName = document.getElementById('studentName').value || "Student";
+        finalScore = 0;
+        finalTotal = Object.keys(answers).length;
+        finalIncorrect = [];
+
+        // Grade objective questions
+        for (let id in answers) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+            
+            const userAns = cleanString(el.value);
+            const correctAnswers = answers[id].map(cleanString);
+
+            if (correctAnswers.includes(userAns) && userAns !== '') {
+                finalScore++;
+            } else {
+                let displayVal = el.value ? `"${el.value}"` : "Left Blank";
+                finalIncorrect.push(`${questionLabels[id]} (Your answer: ${displayVal})`);
+            }
+        }
+
+        finalPercentage = Math.round((finalScore / finalTotal) * 100);
+
+        // Capture Manual Long Answers
+        manualAnswers = {
+            q32b: document.getElementById('q32b').value || "No answer provided.",
+            q33: document.getElementById('q33').value || "No answer provided.",
+            q34: document.getElementById('q34').value || "No answer provided.",
+            q35: document.getElementById('q35').value || "No answer provided."
+        };
+
+        // UI Updates
+        document.getElementById('test-container').classList.add('hidden');
+        const resultsPage = document.getElementById('results-page');
+        resultsPage.classList.remove('hidden');
+
+        document.getElementById('result-name').innerText = `Student: ${finalName}`;
+        
+        const scoreDiv = document.getElementById('result-score');
+        scoreDiv.className = 'text-2xl font-bold p-4 rounded-lg my-6'; 
+        if (finalPercentage >= 90) {
+            scoreDiv.classList.add('bg-green-100', 'text-green-800');
+            scoreDiv.innerText = `Objective Score: ${finalScore}/${finalTotal} (${finalPercentage}%)`;
+        } else if (finalPercentage >= 70) {
+            scoreDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+            scoreDiv.innerText = `Objective Score: ${finalScore}/${finalTotal} (${finalPercentage}%)`;
+        } else {
+            scoreDiv.classList.add('bg-red-100', 'text-red-800');
+            scoreDiv.innerText = `Objective Score: ${finalScore}/${finalTotal} (${finalPercentage}%)`;
+        }
+
+        const incorrectList = document.getElementById('incorrect-list');
+        incorrectList.innerHTML = '';
+        if (finalIncorrect.length === 0) {
+            incorrectList.innerHTML = '<li class="text-green-600 list-none">Perfect objective score! No incorrect answers.</li>';
+        } else {
+            finalIncorrect.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = `Question ${item}`;
+                incorrectList.appendChild(li);
+            });
+        }
+
+        sendEmailReport(finalName, finalScore, finalTotal, finalPercentage, finalIncorrect, manualAnswers);
+    }
+
+    async function sendEmailReport(name, score, total, percentage, incorrectArr, manual) {
+        let emailMessage = `Student Name: ${name}\nObjective Auto-Score: ${score} / ${total} (${percentage}%)\n\n`;
+        
+        emailMessage += `--- AUTO-GRADED INCORRECT QUESTIONS ---\n`;
+        if (incorrectArr.length > 0) {
+            incorrectArr.forEach(item => {
+                emailMessage += `- Question ${item}\n`;
+            });
+        } else {
+            emailMessage += `Perfect objective score.\n`;
+        }
+
+        emailMessage += `\n\n--- MANUAL GRADING REQUIRED (LONG ANSWERS) ---\n\n`;
+        emailMessage += `Question 32 (How do you know?):\n${manual.q32b}\n\n`;
+        emailMessage += `Question 33 (Periods and groups):\n${manual.q33}\n\n`;
+        emailMessage += `Question 34 (Molecules vs Compounds):\n${manual.q34}\n\n`;
+        emailMessage += `Question 35 (Bee Sting):\n${manual.q35}\n\n`;
+
+        try {
+            await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    access_key: 'c9a79668-d06f-42b1-a73d-fee0122288d5',
+                    subject: `Chapter 7 Science Test Result: ${name} (${percentage}% Objective)`,
+                    from_name: 'Science Test Portal',
+                    message: emailMessage
+                })
+            });
+            console.log("Email automatically sent successfully.");
+        } catch (error) {
+            console.error("Failed to send email automatically.", error);
+        }
+    }
+
+    // Helper function to wrap text on the canvas
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        var words = text.split(' ');
+        var line = '';
+        for(var n = 0; n < words.length; n++) {
+          var testLine = line + words[n] + ' ';
+          var metrics = ctx.measureText(testLine);
+          var testWidth = metrics.width;
+          if (testWidth > maxWidth && n > 0) {
+            ctx.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += lineHeight;
+          }
+          else {
+            line = testLine;
+          }
+        }
+        ctx.fillText(line, x, y);
+        return y + lineHeight; 
+    }
+
+    function downloadResultsImage() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 800;
+        
+        // Estimate height needed for long text
+        let estHeight = 350 + (finalIncorrect.length * 25) + 600; 
+        canvas.height = Math.max(estHeight, 800); 
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Header
+        ctx.fillStyle = '#0d9488'; // Teal color
+        ctx.font = 'bold 28px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Test Results: Chapter 7 Science Test', 400, 50);
+
+        // Student Info
+        ctx.fillStyle = '#1f2937';
+        ctx.font = '18px sans-serif';
+        const date = new Date().toLocaleDateString();
+        ctx.fillText(`Date: ${date} | Student: ${finalName}`, 400, 90);
+
+        // Score
+        ctx.font = 'bold 22px sans-serif';
+        let scoreColor = '#16a34a'; 
+        if (finalPercentage < 70) scoreColor = '#dc2626';
+        else if (finalPercentage < 90) scoreColor = '#ca8a04';
+        
+        ctx.fillStyle = scoreColor;
+        ctx.fillText(`Objective Score: ${finalScore} / ${finalTotal} (${finalPercentage}%)`, 400, 130);
+
+        ctx.strokeStyle = '#e5e7eb';
+        ctx.beginPath(); ctx.moveTo(50, 160); ctx.lineTo(750, 160); ctx.stroke();
+
+        // Incorrect List
+        ctx.textAlign = 'left';
+        let currentY = 200;
+
+        if (finalIncorrect.length > 0) {
+            ctx.fillStyle = '#991b1b';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillText('Incorrect Auto-Graded Questions:', 50, currentY);
+            currentY += 30;
+            
+            ctx.fillStyle = '#dc2626';
+            ctx.font = '16px sans-serif';
+            finalIncorrect.forEach(item => {
+                ctx.fillText(`• Question ${item}`, 70, currentY);
+                currentY += 25;
+            });
+        } else {
+            ctx.fillStyle = '#16a34a';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillText('Perfect objective score! No incorrect answers.', 50, currentY);
+            currentY += 30;
+        }
+
+        currentY += 20;
+        ctx.strokeStyle = '#e5e7eb';
+        ctx.beginPath(); ctx.moveTo(50, currentY); ctx.lineTo(750, currentY); ctx.stroke();
+        currentY += 40;
+
+        // Long Answers Section
+        ctx.fillStyle = '#0f766e';
+        ctx.font = 'bold 20px sans-serif';
+        ctx.fillText('Long Answer Submissions (Pending Teacher Review):', 50, currentY);
+        currentY += 40;
+
+        ctx.font = 'bold 16px sans-serif';
+        ctx.fillStyle = '#374151';
+        ctx.fillText('Q32b: How do you know?', 50, currentY);
+        currentY += 25;
+        ctx.font = 'italic 16px sans-serif';
+        ctx.fillStyle = '#4b5563';
+        currentY = wrapText(ctx, manualAnswers.q32b, 70, currentY, 680, 22) + 20;
+
+        ctx.font = 'bold 16px sans-serif';
+        ctx.fillStyle = '#374151';
+        ctx.fillText('Q33: Periods and Groups', 50, currentY);
+        currentY += 25;
+        ctx.font = 'italic 16px sans-serif';
+        ctx.fillStyle = '#4b5563';
+        currentY = wrapText(ctx, manualAnswers.q33, 70, currentY, 680, 22) + 20;
+
+        ctx.font = 'bold 16px sans-serif';
+        ctx.fillStyle = '#374151';
+        ctx.fillText('Q34: Molecules vs Compounds', 50, currentY);
+        currentY += 25;
+        ctx.font = 'italic 16px sans-serif';
+        ctx.fillStyle = '#4b5563';
+        currentY = wrapText(ctx, manualAnswers.q34, 70, currentY, 680, 22) + 20;
+
+        ctx.font = 'bold 16px sans-serif';
+        ctx.fillStyle = '#374151';
+        ctx.fillText('Q35: Bee Sting Relief', 50, currentY);
+        currentY += 25;
+        ctx.font = 'italic 16px sans-serif';
+        ctx.fillStyle = '#4b5563';
+        currentY = wrapText(ctx, manualAnswers.q35, 70, currentY, 680, 22);
+
+        // Download
+        const url = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${finalName.replace(/\s+/g, '_')}_Chapter7_Science.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
+</body>
+</html>
