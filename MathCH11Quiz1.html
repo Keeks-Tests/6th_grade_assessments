@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classifying Triangles Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* CRITICAL iPad RULE: 16px minimum font size prevents aggressive auto-zooming on focus */
+        input, select, textarea { font-size: 16px !important; }
+        
+        /* Feedback states */
+        .correct { 
+            border: 3px solid #22c55e !important; 
+            background-color: #f0fdf4 !important; 
+            color: #166534;
+        }
+        .incorrect { 
+            border: 3px solid #ef4444 !important; 
+            background-color: #fef2f2 !important; 
+            color: #991b1b;
+        }
+        
+        /* Standardize input appearance */
+        .quiz-input {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen p-4 md:p-8 font-sans text-slate-800">
+
+    <!-- WELCOME SCREEN GATE -->
+    <div id="welcome-screen" class="max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-12 text-center mt-10 md:mt-20">
+        <div class="mb-6 inline-block p-4 bg-blue-50 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+        </div>
+        <h1 class="text-4xl font-extrabold text-blue-900 mb-4">Classifying Triangles</h1>
+        <p class="text-slate-600 mb-8 font-medium">Please enter your first and last name to unlock the assessment.</p>
+        
+        <input type="text" id="studentName" required 
+               class="w-full p-4 border-2 border-blue-200 rounded-xl shadow-sm focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none font-bold text-lg text-center mb-6" 
+               placeholder="First and Last Name">
+               
+        <button onclick="startTest()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black text-xl py-4 rounded-xl transition-all shadow-xl active:scale-95 flex justify-center items-center gap-2">
+            Begin Assessment
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- MAIN ASSESSMENT CONTAINER (Hidden by default) -->
+    <div id="test-container" class="hidden max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-10">
+        <header class="border-b-2 border-slate-100 pb-6 mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold text-blue-900 mb-2">Classifying Triangles</h1>
+                <p class="text-slate-500">Answer the 10 questions below. Check your spelling!</p>
+            </div>
+            <div class="bg-blue-50 px-4 py-2 rounded-lg border border-blue-100 w-full md:w-auto text-left md:text-right">
+                <p class="text-xs text-blue-400 font-bold uppercase tracking-wider">Student</p>
+                <p id="display-name" class="text-lg font-bold text-blue-800"></p>
+            </div>
+        </header>
+
+        <div class="space-y-12">
+            
+            <!-- QUESTION 1: Unknown Angle (Visual) -->
+            <div class="question" data-answer="50">
+                <p class="font-bold text-lg mb-4">1. Find the measure of the unknown angle.</p>
+                <div class="flex flex-col sm:flex-row items-center gap-6 bg-slate-50 p-6 rounded-xl border border-slate-100">
+                    <svg width="200" height="120" viewBox="0 0 200 120">
+                        <!-- Right Triangle -->
+                        <polygon points="30,100 170,100 30,20" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>
+                        <!-- Right Angle Square -->
+                        <polyline points="30,85 45,85 45,100" fill="none" stroke="#0284c7" stroke-width="2"/>
+                        <text x="135" y="95" font-size="14" fill="#0f172a" font-weight="bold">40°</text>
+                        <text x="40" y="45" font-size="16" fill="#0f172a" font-weight="bold">?</text>
+                    </svg>
+                    <div class="flex items-center gap-3">
+                        <input type="text" class="quiz-input w-24 p-3 border-2 rounded-lg text-center font-bold text-lg shadow-sm" 
+                               inputmode="decimal" autocorrect="off" placeholder="?">
+                        <span class="text-slate-600 font-bold text-lg">°</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 2: Classify by Angle (Text) -->
+            <div class="question" data-answer="acute">
+                <p class="font-bold text-lg mb-2">2. A triangle has three angles that each measure 60°.</p>
+                <p class="mb-3 text-slate-600">Classify the triangle as <span class="italic font-semibold">acute, obtuse, or right</span>.</p>
+                <input type="text" class="quiz-input w-full sm:w-1/2 p-3 border-2 rounded-lg font-bold shadow-sm" 
+                       inputmode="text" autocorrect="off" spellcheck="false" placeholder="Type your answer...">
+            </div>
+
+            <!-- QUESTION 3: Classify by Sides (Visual) -->
+            <div class="question" data-answer="scalene">
+                <p class="font-bold text-lg mb-4">3. Classify the triangle according to the lengths of its sides.</p>
+                <p class="mb-3 text-sm text-slate-500 uppercase tracking-wide font-bold">Hint: equilateral, isosceles, or scalene</p>
+                <div class="flex flex-col sm:flex-row items-center gap-6 bg-slate-50 p-6 rounded-xl border border-slate-100">
+                    <svg width="200" height="120" viewBox="0 0 200 120">
+                        <polygon points="40,100 180,100 80,20" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>
+                        <text x="110" y="115" font-size="12" fill="#0f172a">4 yd</text>
+                        <text x="40" y="60" font-size="12" fill="#0f172a">6 yd</text>
+                        <text x="140" y="60" font-size="12" fill="#0f172a">5 yd</text>
+                    </svg>
+                    <input type="text" class="quiz-input w-full sm:w-48 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
+                           inputmode="text" autocorrect="off" spellcheck="false" placeholder="Type here...">
+                </div>
+            </div>
+
+            <!-- QUESTION 4: Classify by Sides (Visual) -->
+            <div class="question" data-answer="isosceles">
+                <p class="font-bold text-lg mb-4">4. Classify the triangle according to the lengths of its sides.</p>
+                <div class="flex flex-col sm:flex-row items-center gap-6 bg-slate-50 p-6 rounded-xl border border-slate-100">
+                    <svg width="200" height="120" viewBox="0 0 200 120">
+                        <polygon points="60,100 140,100 100,20" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>
+                        <text x="90" y="115" font-size="12" fill="#0f172a">3 ft</text>
+                        <text x="60" y="60" font-size="12" fill="#0f172a">6 ft</text>
+                        <text x="125" y="60" font-size="12" fill="#0f172a">6 ft</text>
+                    </svg>
+                    <input type="text" class="quiz-input w-full sm:w-48 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
+                           inputmode="text" autocorrect="off" spellcheck="false" placeholder="Type here...">
+                </div>
+            </div>
+
+            <!-- QUESTION 5: Angle Rule (Text) -->
+            <div class="question" data-answer="180">
+                <p class="font-bold text-lg mb-3">5. What is the sum of the three angles of any triangle?</p>
+                <div class="flex items-center gap-3">
+                    <input type="text" class="quiz-input w-24 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
+                           inputmode="decimal" autocorrect="off" placeholder="?">
+                    <span class="text-slate-600 font-bold text-lg">°</span>
+                </div>
+            </div>
+
+            <!-- QUESTION 6: Word Problem (Text) -->
+            <div class="question" data-answer="scalene">
+                <p class="font-bold text-lg mb-2">6. Sadie made a triangle with side lengths of 36 mm, 32 mm, and 51 mm.</p>
+                <p class="mb-3 text-slate-600">What type of triangle did Sadie make?</p>
+                <input type="text" class="quiz-input w-full sm:w-1/2 p-3 border-2 rounded-lg font-bold shadow-sm" 
+                       inputmode="text" autocorrect="off" spellcheck="false" placeholder="Type here...">
+            </div>
+
+            <!-- QUESTION 7: Definitions (Text) -->
+            <div class="question" data-answer="90">
+                <p class="font-bold text-lg mb-3">7. Acute angles are less than what measurement?</p>
+                <div class="flex items-center gap-3">
+                    <input type="text" class="quiz-input w-24 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
+                           inputmode="decimal" autocorrect="off" placeholder="?">
+                    <span class="text-slate-600 font-bold text-lg">°</span>
+                </div>
+            </div>
+
+            <!-- QUESTION 8: Logic Check (Text) -->
+            <div class="question" data-answer="no">
+                <p class="font-bold text-lg mb-3">8. Can an isosceles triangle have side lengths of 8 ft, 9 ft, and 10 ft?</p>
+                <p class="mb-3 text-sm text-slate-500 uppercase tracking-wide font-bold">Answer YES or NO</p>
+                <input type="text" class="quiz-input w-32 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
+                       inputmode="text" autocorrect="off" spellcheck="false" placeholder="Yes / No">
+            </div>
+
+            <!-- QUESTION 9: Unknown Angle Obtuse (Visual) -->
+            <div class="question" data-answer="20">
+                <p class="font-bold text-lg mb-4">9. Find the measure of the unknown angle.</p>
+                <div class="flex flex-col sm:flex-row items-center gap-6 bg-slate-50 p-6 rounded-xl border border-slate-100">
+                    <svg width="220" height="120" viewBox="0 0 220 120">
+                        <polygon points="10,100 200,100 150,40" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>
+                        <text x="140" y="90" font-size="14" fill="#0f172a" font-weight="bold">110°</text>
+                        <text x="40" y="95" font-size="14" fill="#0f172a" font-weight="bold">?</text>
+                        <text x="150" y="55" font-size="14" fill="#0f172a" font-weight="bold">50°</text>
+                    </svg>
+                    <div class="flex items-center gap-3">
+                        <input type="text" class="quiz-input w-24 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
+                               inputmode="decimal" autocorrect="off" placeholder="?">
+                        <span class="text-slate-600 font-bold text-lg">°</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION 10: Equilateral Logic (Text) -->
+            <div class="question" data-answer="60">
+                <p class="font-bold text-lg mb-2">10. If the measure of one angle in an equilateral triangle is 60°...</p>
+                <p class="mb-3 text-slate-600">What is the measure of the other two angles? (Enter the single number they both equal)</p>
+                <div class="flex items-center gap-3">
+                    <input type="text" class="quiz-input w-24 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
+                           inputmode="decimal" autocorrect="off" placeholder="?">
+                    <span class="text-slate-600 font-bold text-lg">°</span>
+                </div>
+            </div>
+
+        </div>
+
+        <button onclick="gradeTest()" class="w-full mt-12 bg-blue-600 hover:bg-blue-700 text-white font-black text-xl py-4 rounded-xl transition-all shadow-xl active:scale-95 flex justify-center items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Turn In Assessment
+        </button>
+    </div>
+
+    <!-- RESULTS PAGE (Hidden initially) -->
+    <div id="results-page" class="hidden max-w-2xl mx-auto mt-10">
+        <div id="capture-area" class="bg-white rounded-2xl shadow-2xl p-10 text-center relative overflow-hidden border-t-8 border-blue-500">
+            <!-- Decorative background element -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-100 rounded-full opacity-50"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-green-100 rounded-full opacity-50"></div>
+            
+            <h2 class="text-4xl font-black text-slate-800 mb-2 relative z-10">Assessment Complete!</h2>
+            <div id="student-display" class="text-2xl text-blue-600 font-bold mb-6 relative z-10 uppercase tracking-wider"></div>
+            
+            <div class="bg-slate-50 inline-block p-8 rounded-2xl mb-6 shadow-inner relative z-10">
+                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Final Score</p>
+                <div class="text-6xl font-extrabold text-slate-800" id="score-display">0%</div>
+            </div>
+            
+            <p class="text-slate-500 mb-8 font-medium relative z-10">Your teacher has successfully received your grade.</p>
+        </div>
+        
+        <button onclick="downloadResults()" class="mt-8 w-full sm:w-auto mx-auto bg-slate-800 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-900 flex justify-center items-center gap-3 shadow-lg transition-transform active:scale-95">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Save Screenshot of Grade
+        </button>
+    </div>
+
+    <script>
+        // Global variable to store the name securely across functions
+        let globalStudentName = "";
+
+        // Function to handle the Name Gate
+        function startTest() {
+            const nameInput = document.getElementById('studentName');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert("Please enter your name to begin.");
+                nameInput.focus();
+                return;
+            }
+            
+            // Save name and update UI header
+            globalStudentName = name;
+            document.getElementById('display-name').innerText = name;
+            
+            // Swap screens
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('test-container').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        async function gradeTest() {
+            // Retrieve name from our secure global variable instead of an input
+            const studentName = globalStudentName;
+            
+            const questions = document.querySelectorAll('.question');
+            let correctCount = 0;
+            let reportBody = `Assessment: Classifying Triangles\nStudent: ${studentName}\n\n`;
+
+            questions.forEach((q, index) => {
+                const input = q.querySelector('.quiz-input');
+                // CLEAN THE STRING: Remove extra spaces, make lowercase. 
+                // This stops 6th graders from missing questions just because they typed " Scalene "
+                const rawUserAnswer = input.value;
+                const userAnswer = rawUserAnswer.trim().toLowerCase();
+                const correctAnswer = q.getAttribute('data-answer').toLowerCase();
+
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
+                    reportBody += `Q${index + 1}: ${rawUserAnswer} (Correct)\n`;
+                } else {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
+                    reportBody += `Q${index + 1}: ${rawUserAnswer || "[Blank]"} (Incorrect, expected: ${correctAnswer})\n`;
+                }
+                
+                // Lock the input after grading
+                input.readOnly = true;
+            });
+
+            // Calculate grade
+            const score = Math.round((correctCount / questions.length) * 100);
+            reportBody += `\nFinal Score: ${score}% (${correctCount}/${questions.length})`;
+
+            // Disable main button to prevent double clicks
+            const submitBtn = document.querySelector('button[onclick="gradeTest()"]');
+            submitBtn.innerText = "Submitting...";
+            submitBtn.disabled = true;
+
+            // 1. Silent Email Submission
+            await submitToTeacher(studentName, score, reportBody);
+
+            // 2. UI Transition
+            window.scrollTo(0,0);
+            document.getElementById('test-container').classList.add('hidden');
+            document.getElementById('results-page').classList.remove('hidden');
+            document.getElementById('student-display').innerText = studentName;
+            document.getElementById('score-display').innerText = `${score}%`;
+        }
+
+        async function submitToTeacher(name, score, message) {
+            const formData = {
+                access_key: "c9a79668-d06f-42b1-a73d-fee0122288d5",
+                subject: `Math Quiz Result: ${name} - ${score}%`,
+                from_name: "Classroom iPad Assessment",
+                name: name,
+                message: message
+            };
+
+            try {
+                await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                    body: JSON.stringify(formData)
+                });
+                console.log("Grade successfully transmitted.");
+            } catch (e) {
+                console.error("Submission failed. Ensure iPad has internet connection.", e);
+            }
+        }
+
+        function downloadResults() {
+            // Use HTML2Canvas to capture the stylized results div
+            const area = document.getElementById('capture-area');
+            html2canvas(area, {
+                scale: 2, // High resolution for iPads
+                backgroundColor: "#ffffff"
+            }).then(canvas => {
+                const link = document.createElement('a');
+                // Use the global name variable here to name the file properly
+                const safeName = globalStudentName.replace(/[^a-z0-9]/gi, '_');
+                link.download = `Math_Grade_${safeName}.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
