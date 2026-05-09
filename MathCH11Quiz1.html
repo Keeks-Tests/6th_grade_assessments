@@ -154,12 +154,15 @@
                 </div>
             </div>
 
-            <!-- QUESTION 8: Logic Check (Text) -->
+            <!-- QUESTION 8: Logic Check (Dropdown) -->
             <div class="question" data-answer="no">
                 <p class="font-bold text-lg mb-3">8. Can an isosceles triangle have side lengths of 8 ft, 9 ft, and 10 ft?</p>
-                <p class="mb-3 text-sm text-slate-500 uppercase tracking-wide font-bold">Answer YES or NO</p>
-                <input type="text" class="quiz-input w-32 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
-                       inputmode="text" autocorrect="off" spellcheck="false" placeholder="Yes / No">
+                <p class="mb-3 text-sm text-slate-500 uppercase tracking-wide font-bold">Select YES or NO</p>
+                <select class="quiz-input w-32 p-3 border-2 rounded-lg text-center font-bold shadow-sm bg-white cursor-pointer outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="" disabled selected>-</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
             </div>
 
             <!-- QUESTION 9: Unknown Angle Obtuse (Visual) -->
@@ -180,10 +183,10 @@
                 </div>
             </div>
 
-            <!-- QUESTION 10: Equilateral Logic (Text) -->
-            <div class="question" data-answer="60">
-                <p class="font-bold text-lg mb-2">10. If the measure of one angle in an equilateral triangle is 60°...</p>
-                <p class="mb-3 text-slate-600">What is the measure of the other two angles? (Enter the single number they both equal)</p>
+            <!-- QUESTION 10: Definitions (Text) -->
+            <div class="question" data-answer="90">
+                <p class="font-bold text-lg mb-2">10. Obtuse angles are more than what measurement?</p>
+                <p class="mb-3 text-slate-600">(Enter the number of degrees)</p>
                 <div class="flex items-center gap-3">
                     <input type="text" class="quiz-input w-24 p-3 border-2 rounded-lg text-center font-bold shadow-sm" 
                            inputmode="decimal" autocorrect="off" placeholder="?">
