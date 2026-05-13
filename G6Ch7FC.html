@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChemMaster: Chapter 7 Flashcards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        /* Smooth transitions for the card flip */
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Prevent text selection during rapid clicking */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Custom scrollbar for grid view */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen no-select">
+
+    <div class="max-w-4xl mx-auto p-4 md:p-8">
+        <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-indigo-900 flex items-center gap-2">
+                    <i data-lucide="brain-circuit" class="text-indigo-600"></i>
+                    ChemMaster: Chapter 7
+                </h1>
+                <p class="text-slate-500 italic">Reference files: 575.png & 576.png</p>
+            </div>
+            <div class="flex gap-2 bg-white p-1 rounded-xl shadow-sm border border-slate-200">
+                <button id="studyViewBtn" onclick="setView('study')" class="flex items-center gap-2 px-4 py-2 rounded-lg transition-all bg-indigo-600 text-white shadow-md">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Study
+                </button>
+                <button id="gridViewBtn" onclick="setView('grid')" class="flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-slate-600 hover:bg-slate-100">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i> Review All
+                </button>
+            </div>
+        </header>
+
+        <!-- STUDY VIEW -->
+        <div id="studyView" class="space-y-6">
+            <div class="space-y-2">
+                <div class="flex justify-between text-sm font-medium text-slate-600">
+                    <span id="cardCounter">Card 1 of 21</span>
+                    <span id="percentText">0% Complete</span>
+                </div>
+                <div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                    <div id="progressBar" class="h-full bg-indigo-600 transition-all duration-500 ease-out" style="width: 5%"></div>
+                </div>
+            </div>
+
+            <!-- FLASHCARD -->
+            <div class="relative h-[400px] w-full perspective-1000">
+                <div id="flashcard" class="card-inner relative w-full h-full preserve-3d cursor-pointer" onclick="toggleFlip()">
+                    <!-- Front -->
+                    <div class="absolute inset-0 bg-white rounded-3xl shadow-xl border-b-4 border-indigo-200 flex flex-col p-8 backface-hidden">
+                        <div class="mb-4 flex justify-between items-start">
+                            <span id="cardCategory" class="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded-full uppercase tracking-wider">CATEGORY</span>
+                            <span id="masteredBadge" class="hidden items-center gap-1 text-green-600 text-xs font-bold">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> MASTERED
+                            </span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center text-center px-4">
+                            <h2 id="cardQuestion" class="text-2xl md:text-3xl font-semibold text-slate-800 leading-tight">Loading question...</h2>
+                        </div>
+                        <div class="mt-4 text-center text-slate-400 text-sm flex items-center justify-center gap-2">
+                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Click to flip
+                        </div>
+                    </div>
+                    <!-- Back -->
+                    <div class="absolute inset-0 bg-indigo-600 rounded-3xl shadow-xl border-b-4 border-indigo-800 text-white flex flex-col p-8 rotate-y-180 backface-hidden">
+                        <div class="mb-4">
+                            <span class="px-3 py-1 bg-white/20 text-white text-xs font-bold rounded-full uppercase tracking-wider">The Answer</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center text-center px-4">
+                            <p id="cardAnswer" class="text-xl md:text-2xl font-medium leading-relaxed">Loading answer...</p>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                             <button onclick="toggleMastery(event)" id="masteryBtn" class="flex items-center gap-2 px-4 py-2 rounded-xl transition-colors bg-white/10 text-white hover:bg-white/20">
+                                <i data-lucide="check-circle-2" class="w-4.5 h-4.5"></i> <span id="masteryBtnText">Mark as Known</span>
+                            </button>
+                            <span class="text-white/60 text-sm">Click to see question</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTROLS -->
+            <div class="flex justify-between items-center gap-4">
+                <button onclick="prevCard()" class="p-4 bg-white rounded-full shadow-md hover:shadow-lg transition-all text-indigo-600 hover:scale-110 active:scale-95 border border-slate-100">
+                    <i data-lucide="chevron-left" class="w-8 h-8"></i>
+                </button>
+                <button onclick="shuffleDeck()" class="flex items-center gap-2 px-8 py-4 bg-white text-indigo-600 font-bold rounded-2xl shadow-md border border-slate-100 hover:bg-indigo-50 transition-all hover:scale-105 active:scale-95">
+                    <i data-lucide="shuffle" class="w-5 h-5"></i> Shuffle Deck
+                </button>
+                <button onclick="nextCard()" class="p-4 bg-indigo-600 rounded-full shadow-md hover:shadow-lg transition-all text-white hover:scale-110 active:scale-95">
+                    <i data-lucide="chevron-right" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- GRID VIEW -->
+        <div id="gridView" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Grid cards will be injected here -->
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-12 text-center text-slate-400 text-sm border-t border-slate-200 pt-8">
+            <div class="flex flex-col items-center gap-2 mb-2">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                    <span>Study content derived from Chapter 7 Science Test</span>
+                </div>
+                <ul class="text-xs space-y-1 opacity-75">
+                    <li>• Sources: 575.png & 576.png</li>
+                </ul>
+            </div>
+            <p class="mt-4">© 2024 ChemStudy Interactive</p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        const INITIAL_DATA = [
+            { id: 1, category: "Atoms", question: "What are the three main parts of an atom?", answer: "Electrons (negative), Protons (positive), and Neutrons (neutral)." },
+            { id: 2, category: "Atoms", question: "Where are protons and neutrons located?", answer: "In the nucleus (the center section of the atom)." },
+            { id: 3, category: "Definitions", question: "What is an element?", answer: "A substance that contains only one kind of atom." },
+            { id: 4, category: "Definitions", question: "What is an atom?", answer: "The smallest piece of an element that can be recognized as that element." },
+            { id: 5, category: "Chemistry", question: "Define 'Chemistry'.", answer: "The study of matter—what it is made of, its characteristics, and how it reacts to other matter." },
+            { id: 6, category: "Definitions", question: "What is an ion?", answer: "An atom that has gained or lost electrons." },
+            { id: 7, category: "Reactions", question: "What is a chemical change?", answer: "The process in which different types of atoms join and form a new substance." },
+            { id: 8, category: "Definitions", question: "What is a chemical formula?", answer: "Chemical symbols and numbers abbreviating the name of a compound." },
+            { id: 9, category: "Acids & Bases", question: "What is an ionic compound produced from a reaction between an acid and a base?", answer: "A salt." },
+            { id: 10, category: "Acids & Bases", question: "What are three characteristics of acids?", answer: "Sour taste, can burn/be corrosive, and examples include lemons, vinegar, and tomato juice." },
+            { id: 11, category: "Acids & Bases", question: "What are three characteristics of bases?", answer: "Bitter taste, slippery to touch, and examples include baking soda, soap, and bleach." },
+            { id: 12, category: "Atoms", question: "What is Atomic Mass?", answer: "The sum of the number of protons and neutrons in an atom." },
+            { id: 13, category: "Scientists", question: "Who developed a simplified model of an atom?", answer: "Niels Bohr." },
+            { id: 14, category: "Scientists", question: "Who developed the periodic table of elements?", answer: "Dmitri Mendeleev." },
+            { id: 15, category: "Bonds", question: "What is an ionic bond?", answer: "When positively and negatively charged ions attract each other." },
+            { id: 16, category: "Bonds", question: "What is a covalent bond?", answer: "When atoms share electrons." },
+            { id: 17, category: "Reactions", question: "What is a decomposition reaction?", answer: "When a compound is broken down into simpler compounds." },
+            { id: 18, category: "Acids & Bases", question: "What scale determines the concentration of acids or bases?", answer: "The pH scale." },
+            { id: 19, category: "Acids & Bases", question: "What is an indicator?", answer: "A substance that changes color when exposed to acid or base solutions." },
+            { id: 20, category: "Periodic Table", question: "What do Periods (rows) tell you about an element?", answer: "How many shells of electrons the element has." },
+            { id: 21, category: "Periodic Table", question: "What do Groups (columns) tell you about an element?", answer: "How many electrons are in the element's outer shell." }
+        ];
+
+        let deck = [...INITIAL_DATA];
+        let currentIndex = 0;
+        let isFlipped = false;
+        let masteredIds = new Set();
+        let currentView = 'study';
+
+        function updateUI() {
+            const card = deck[currentIndex];
+            const progress = ((currentIndex + 1) / deck.length) * 100;
+
+            // Update Progress
+            document.getElementById('cardCounter').innerText = `Card ${currentIndex + 1} of ${deck.length}`;
+            document.getElementById('percentText').innerText = `${Math.round(progress)}% Complete`;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+
+            // Update Card Content
+            document.getElementById('cardCategory').innerText = card.category;
+            document.getElementById('cardQuestion').innerText = card.question;
+            document.getElementById('cardAnswer').innerText = card.answer;
+
+            // Mastery Status
+            const isMastered = masteredIds.has(card.id);
+            document.getElementById('masteredBadge').classList.toggle('hidden', !isMastered);
+            document.getElementById('masteredBadge').classList.toggle('flex', isMastered);
+            
+            const mBtn = document.getElementById('masteryBtn');
+            const mBtnText = document.getElementById('masteryBtnText');
+            if (isMastered) {
+                mBtn.className = "flex items-center gap-2 px-4 py-2 rounded-xl transition-colors bg-green-500 text-white shadow-lg";
+                mBtnText.innerText = "Mastered";
+            } else {
+                mBtn.className = "flex items-center gap-2 px-4 py-2 rounded-xl transition-colors bg-white/10 text-white hover:bg-white/20";
+                mBtnText.innerText = "Mark as Known";
+            }
+
+            lucide.createIcons();
+        }
+
+        function toggleFlip() {
+            isFlipped = !isFlipped;
+            document.getElementById('flashcard').classList.toggle('rotate-y-180', isFlipped);
+        }
+
+        function nextCard() {
+            resetFlip();
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % deck.length;
+                updateUI();
+            }, 150);
+        }
+
+        function prevCard() {
+            resetFlip();
+            setTimeout(() => {
+                currentIndex = (currentIndex - 1 + deck.length) % deck.length;
+                updateUI();
+            }, 150);
+        }
+
+        function resetFlip() {
+            isFlipped = false;
+            document.getElementById('flashcard').classList.remove('rotate-y-180');
+        }
+
+        function shuffleDeck() {
+            resetFlip();
+            setTimeout(() => {
+                for (let i = deck.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [deck[i], deck[j]] = [deck[j], deck[i]];
+                }
+                currentIndex = 0;
+                updateUI();
+            }, 150);
+        }
+
+        function toggleMastery(event) {
+            event.stopPropagation();
+            const cardId = deck[currentIndex].id;
+            if (masteredIds.has(cardId)) {
+                masteredIds.delete(cardId);
+            } else {
+                masteredIds.add(cardId);
+            }
+            updateUI();
+            if (currentView === 'grid') renderGrid(); // Sync grid view if it's active
+        }
+
+        function setView(view) {
+            currentView = view;
+            const studyView = document.getElementById('studyView');
+            const gridView = document.getElementById('gridView');
+            const sBtn = document.getElementById('studyViewBtn');
+            const gBtn = document.getElementById('gridViewBtn');
+
+            if (view === 'study') {
+                studyView.classList.remove('hidden');
+                gridView.classList.add('hidden');
+                sBtn.className = "flex items-center gap-2 px-4 py-2 rounded-lg transition-all bg-indigo-600 text-white shadow-md";
+                gBtn.className = "flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-slate-600 hover:bg-slate-100";
+            } else {
+                studyView.classList.add('hidden');
+                gridView.classList.remove('hidden');
+                gBtn.className = "flex items-center gap-2 px-4 py-2 rounded-lg transition-all bg-indigo-600 text-white shadow-md";
+                sBtn.className = "flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-slate-600 hover:bg-slate-100";
+                renderGrid();
+            }
+        }
+
+        function renderGrid() {
+            const gridContainer = document.getElementById('gridView');
+            gridContainer.innerHTML = INITIAL_DATA.map(card => `
+                <div class="p-6 rounded-2xl border transition-all ${masteredIds.has(card.id) ? 'bg-green-50 border-green-200' : 'bg-white border-slate-200 shadow-sm'}">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                            ${card.category}
+                        </span>
+                        <button onclick="toggleGridMastery(${card.id})">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 ${masteredIds.has(card.id) ? 'text-green-600' : 'text-slate-300 hover:text-slate-400'}"></i>
+                        </button>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 mb-2">${card.question}</h3>
+                    <p class="text-slate-600 text-sm bg-slate-50 p-3 rounded-lg border border-slate-100 italic">
+                        ${card.answer}
+                    </p>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function toggleGridMastery(id) {
+            if (masteredIds.has(id)) {
+                masteredIds.delete(id);
+            } else {
+                masteredIds.add(id);
+            }
+            renderGrid();
+            updateUI(); // Keep study view in sync
+        }
+
+        // Initialize Lucide icons and UI
+        window.onload = () => {
+            lucide.createIcons();
+            updateUI();
+        };
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (currentView !== 'study') return;
+            if (e.key === 'ArrowRight' || e.key === ' ') nextCard();
+            if (e.key === 'ArrowLeft') prevCard();
+            if (e.key === 'Enter') toggleFlip();
+        });
+    </script>
+</body>
+</html>
